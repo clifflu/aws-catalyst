@@ -2,6 +2,8 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+VERSION = "0.0.2"
+
 here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
@@ -13,7 +15,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.0.1",
+    version=VERSION,
 
     description="boto3 wrapper to make AWS DevOps' life easier",
     long_description=long_description,

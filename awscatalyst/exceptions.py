@@ -1,0 +1,3 @@
+
+class StackExists(Exception):
+    pass

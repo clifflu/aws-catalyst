@@ -1,12 +1,26 @@
 import boto3
+import json
+import urllib2
 
 class Aws(object):
     """
     """
+    TIMEOUT_MAGIC_URL = 1
 
-    @staticmethod
-    def get_region():
-        return boto3.Session().region_name
+    @classmethod
+    def get_region_magic_url(cls):
+        url = "http://169.254.169.254/latest/dynamic/instance-identity/document"
+        try:
+            return json.loads(urllib2.urlopen(url, timeout=TIMEOUT_MAGIC_URL).read()).get('region')
+        except (urllib2.HTTPError, urllib2.URLError, ValueError):
+            pass
+
+        return None
+
+    @classmethod
+    def get_region(cls):
+        return boto3.Session().region_name or \
+            cls.get_region_magic_url()
 
     @classmethod
     def get_region_shortname(cls, s=None):

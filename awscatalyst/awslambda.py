@@ -48,9 +48,11 @@ class LambdaBuilder(object):
         :param str prefix: without leading and trailing slashes
         """
         s3 = S3()
+
         prefix = prefix or "lambda-src"
         key_name = key_name or datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ.zip")
-        uploaded_path = "%s/lambda-src/%s" % (prefix, key_name)
+
+        uploaded_path = "%s/%s" % (prefix, key_name)
 
         with tempdir() as td:
             archive_name = self._compile(td.path, key_name)

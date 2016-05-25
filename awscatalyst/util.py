@@ -24,29 +24,6 @@ def render(template, mapping):
     return tpl.render(mapping)
 
 
-def shorten_region_name(s):
-    alternatives = {
-        'use1': {'us-east-1', },
-        'usw1': {'us-west-1', },
-        'usw2': {'us-west-2', },
-        'sae1': {'sa-east-1', },
-        'apn1': {'ap-northeast-1', },
-        'apn2': {'ap-northeast-2', },
-        'aps1': {'ap-southeast-1', },
-        'ap22': {'ap-southeast-2', },
-        'euw1': {'eu-west-1', },
-        'euc1': {'eu-central-1', },
-    }
-
-    s = s.lower()
-
-    for sn, candidates in alternatives.items():
-        if s in candidates:
-            return sn
-
-    return s
-
-
 class tempdir(object):
     """
     Context manager to create and handle temp dir, expose utility methods,

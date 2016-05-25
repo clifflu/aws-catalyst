@@ -27,6 +27,8 @@ class CfnStack(Aws):
         :param str stack_name: Name to the CFN Stack
         :param cfn_r: CFN Resource or None
         """
+        region_name = region_name or self.get_region()
+        
         self._cfn = boto3.resource('cloudformation', region_name=region_name)
         self._stack_name = stack_name
         self._stack = self._cfn.Stack(stack_name)

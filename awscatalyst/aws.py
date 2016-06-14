@@ -11,7 +11,7 @@ class Aws(object):
     def get_region_magic_url(cls):
         url = "http://169.254.169.254/latest/dynamic/instance-identity/document"
         try:
-            return json.loads(urllib2.urlopen(url, timeout=TIMEOUT_MAGIC_URL).read()).get('region')
+            return json.loads(urllib2.urlopen(url, timeout=cls.TIMEOUT_MAGIC_URL).read()).get('region')
         except (urllib2.HTTPError, urllib2.URLError, ValueError):
             pass
 
@@ -23,7 +23,7 @@ class Aws(object):
             cls.get_region_magic_url()
 
     @classmethod
-    def get_region_shortname(cls, s=None):
+    def get_region_shortname(cls, region_name=None):
         alternatives = {
             'use1': {'us-east-1', },
             'usw1': {'us-west-1', },
@@ -37,10 +37,10 @@ class Aws(object):
             'euc1': {'eu-central-1', },
         }
 
-        s = s.lower() if s else cls.get_region()
+        region_name = region_name.lower() if region_name else cls.get_region()
 
-        for sn, candidates in alternatives.items():
-            if s in candidates:
-                return sn
+        for shortname, candidates in alternatives.items():
+            if region_name in candidates:
+                return shortname
 
-        return s
+        return region_name

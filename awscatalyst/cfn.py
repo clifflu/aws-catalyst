@@ -18,7 +18,7 @@ from exceptions import StackExists
 
 class CfnStack(Aws):
     """
-    Avatar to AWS CloudFormation
+    Avatar to AWS CloudFormation, relies on its own region_name instead of environment.
     """
     QUERY_DELAY_SEC = 2
 

@@ -11,7 +11,7 @@ class Aws(object):
     def get_region_magic_url(cls):
         url = "http://169.254.169.254/latest/dynamic/instance-identity/document"
         try:
-            return json.loads(urllib2.urlopen(url, timeout=TIMEOUT_MAGIC_URL).read()).get('region')
+            return json.loads(urllib2.urlopen(url, timeout=cls.TIMEOUT_MAGIC_URL).read()).get('region')
         except (urllib2.HTTPError, urllib2.URLError, ValueError):
             pass
 

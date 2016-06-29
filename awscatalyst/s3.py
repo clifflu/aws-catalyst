@@ -10,13 +10,20 @@ class S3(Aws):
         self._s3r = s3_resource or boto3.resource('s3')
 
     def safe_create_bucket(self, bucket_name, region=None):
+        """
+        Create S3 bucket in the specified region if it's not there, 
+        and return the boto3 bucket object.
+        """
+        region = region or self.get_region()
+
+        args = {Bucket: bucket_name}
+        if region not in (None, 'us-east-1'):
+            args.update({
+                CreateBucketConfiguration: {"LocationConstraint": region}
+            })
+
         try:
-            return self._s3r.create_bucket(
-                Bucket=bucket_name,
-                CreateBucketConfiguration={
-                    "LocationConstraint": region or self.get_region()
-                }
-            )
+            return self._s3r.create_bucket(**args)
         except botocore.exceptions.ClientError:
             pass
 
